@@ -3,6 +3,7 @@
 namespace Pantheon\Terminus\Commands\Backup;
 
 use Pantheon\Terminus\Commands\WorkflowProcessingTrait;
+use Pantheon\Terminus\Exceptions\TerminusException;
 
 /**
  * Class CreateCommand
@@ -20,7 +21,9 @@ class CreateCommand extends BackupCommand
      * @command backup:create
      *
      * @param string $site_env Site & environment in the format `site-name.env`
-     * @option string $element [all|code|files|database|db] Element to be backed up
+     * @param array $options
+     * @throws TerminusException
+     * @option string $element [all|code|files|database|db] Element to be backed up. Multiple elements can be comma separated.
      * @option integer $keep-for Retention period, in days, to retain backup
      *
      * @usage <site>.<env> Creates a backup of <site>'s <env> environment.

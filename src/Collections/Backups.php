@@ -4,6 +4,7 @@ namespace Pantheon\Terminus\Collections;
 
 use Pantheon\Terminus\Exceptions\TerminusNotFoundException;
 use Pantheon\Terminus\Models\Backup;
+use Pantheon\Terminus\Models\Workflow;
 
 /**
  * Class Backups
@@ -56,8 +57,17 @@ class Backups extends EnvironmentOwnedCollection
             'entry_type' => 'backup',
         ];
 
-        if (!is_null($element = $options['element'])) {
-            $params[$element] = true;
+        if (!is_null($options['element'])) {
+            $elements = explode(",", $options['element']);
+            foreach ($elements as $element) {
+                $element = trim($element);
+                if ($el = $this->getElement($element)) {
+                    // Validate keys.
+                    if (in_array($el, $this->getValidElements())) {
+                        $params[$el] = true;
+                    }
+                }
+            }
         } else {
             $params['code'] = $params['database'] = $params['files'] = true;
         }
@@ -199,7 +209,24 @@ class Backups extends EnvironmentOwnedCollection
      */
     public function getValidElements()
     {
-        return ['code', 'files', 'database', 'db',];
+        return ['code', 'files', 'database',];
+    }
+
+    /**
+     * Returns the API-ready element name for the given string
+     *
+     * @param string $element
+     * @return null|string
+     */
+    protected function getElement($element)
+    {
+        if ($element === 'db') {
+            return 'database';
+        }
+        if ($element === 'all') {
+            return null;
+        }
+        return $element;
     }
 
     /**
