@@ -24,7 +24,10 @@ class ConsoleCommand extends TerminusCommand implements SiteAwareInterface
      *
      * @usage Opens an interactive PHP console within Terminus.
      * @usage <site> Opens an interactive PHP console within Terminus and loads <site> as $site.
-     * @usage <site>.<env> Opens an interactive PHP console within Terminus and loads <site> and its <env> environment as $site and $env.
+     * @usage <site>.<env> Opens an interactive PHP console within Terminus and loads <site> and its <env> environment
+     * as $site and $env.
+     *
+     * @param null $site_env
      */
     public function console($site_env = null)
     {

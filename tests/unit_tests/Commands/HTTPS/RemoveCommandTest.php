@@ -1,6 +1,6 @@
 <?php
 
-namespace Pantheon\Terminus\UnitTests\HTTPS;
+namespace Pantheon\Terminus\UnitTests\Commands\HTTPS;
 
 use Pantheon\Terminus\Commands\HTTPS\RemoveCommand;
 use Pantheon\Terminus\Models\Workflow;
@@ -20,7 +20,7 @@ class RemoveCommandTest extends CommandTestCase
     /**
      * @inheritdoc
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -65,7 +65,8 @@ class RemoveCommandTest extends CommandTestCase
             ->method('disableHttpsCertificate')
             ->will($this->throwException(new TerminusException('Could not delete')));
 
-        $this->setExpectedException(TerminusException::class);
+        $this->expectException(TerminusException::class);
+
         $this->command->remove('mysite.dev');
     }
 }

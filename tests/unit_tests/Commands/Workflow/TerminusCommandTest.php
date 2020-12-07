@@ -1,8 +1,10 @@
 <?php
 
-namespace Pantheon\Terminus\UnitTests\Commands;
+namespace Pantheon\Terminus\UnitTests\Commands\Workflow;
 
 use Pantheon\Terminus\Style\TerminusStyle;
+use Pantheon\Terminus\UnitTests\Commands\CommandTestCase;
+use Pantheon\Terminus\UnitTests\Commands\DummyCommand;
 use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -16,7 +18,7 @@ class TerminusCommandTest extends CommandTestCase
     /**
      * @inherit
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

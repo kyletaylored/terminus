@@ -3,7 +3,9 @@
 namespace Pantheon\Terminus\UnitTests\Commands\Owner;
 
 use Pantheon\Terminus\Commands\Owner\SetCommand;
+use Pantheon\Terminus\Exceptions\TerminusException;
 use Pantheon\Terminus\Models\User;
+use Pantheon\Terminus\Terminus;
 use Pantheon\Terminus\UnitTests\Commands\CommandTestCase;
 use Pantheon\Terminus\Collections\SiteUserMemberships;
 use Pantheon\Terminus\Exceptions\TerminusNotFoundException;
@@ -28,7 +30,7 @@ class SetCommandTest extends CommandTestCase
     /**
      * @inheritdoc
      */
-    protected function setup()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -111,7 +113,7 @@ class SetCommandTest extends CommandTestCase
         $this->logger->expects($this->never())
             ->method('log');
 
-        $this->setExpectedException(TerminusNotFoundException::class);
+        $this->expectException(TerminusNotFoundException::class);
 
         $out = $this->command->setOwner('dummy-site', $email);
         $this->assertNull($out);
@@ -135,7 +137,7 @@ class SetCommandTest extends CommandTestCase
         $this->logger->expects($this->never())
             ->method('log');
 
-        $this->setExpectedException(\Exception::class);
+        $this->expectException(\Exception::class);
 
         $out = $this->command->setOwner('dummy-site', $email);
         $this->assertNull($out);

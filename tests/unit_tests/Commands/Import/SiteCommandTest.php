@@ -25,7 +25,7 @@ class SiteCommandTest extends CommandTestCase
     /**
      * @inheritdoc
      */
-    protected function setup()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -40,7 +40,7 @@ class SiteCommandTest extends CommandTestCase
         $this->command->setInput($this->input);
         $this->expectWorkflowProcessing();
     }
-    
+
     /**
      * Exercises site:import command with a valid URL
      */
@@ -82,14 +82,16 @@ class SiteCommandTest extends CommandTestCase
             ->with()
             ->will($this->throwException(new \Exception('Successfully queued import_site')));
 
-        $this->setExpectedException(TerminusException::class, 'Site import failed');
+        $this->expectException(TerminusException::class);
+        $this->expectExceptionMessage('Site import failed');
 
         $out = $this->command->import('dummy-site', $url);
         $this->assertNull($out);
     }
 
     /**
-     * Exercises site:import command when the workflow throws an exception with a message other than "Successfully queued import_site"
+     * Exercises site:import command when the workflow throws an exception with a message other than
+     * "Successfully queued import_site"
      */
     public function testSiteImportUnspecifiedException()
     {
@@ -107,7 +109,8 @@ class SiteCommandTest extends CommandTestCase
             ->with()
             ->will($this->throwException(new \Exception($message)));
 
-        $this->setExpectedException(\Exception::class, $message);
+        $this->expectException(TerminusException::class);
+        $this->expectExceptionMessage($message);
 
         $out = $this->command->import('dummy-site', $url);
         $this->assertNull($out);

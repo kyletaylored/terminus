@@ -1,6 +1,6 @@
 <?php
 
-namespace Pantheon\Terminus\UnitTests\HTTPS;
+namespace Pantheon\Terminus\UnitTests\Commands\HTTPS;
 
 use Pantheon\Terminus\Commands\HTTPS\SetCommand;
 use Pantheon\Terminus\Models\Workflow;
@@ -20,11 +20,12 @@ class SetCommandTest extends CommandTestCase
      * @var Workflow
      */
     protected $workflow;
+    protected $logger;
 
     /**
      * @inheritdoc
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

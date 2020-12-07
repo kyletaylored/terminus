@@ -7,16 +7,16 @@ use Robo\Config;
 use Pantheon\Terminus\Models\MachineToken;
 
 /**
- * Class MachineTokensListCommandTest
+ * Class MachineTokenListCommandTest
  * Testing class for Pantheon\Terminus\Commands\Auth\LoginCommand
  * @package Pantheon\Terminus\UnitTests\Commands\Auth
  */
-class MachineTokensListCommandTest extends MachineTokenCommandTest
+class MachineTokenListCommandTest extends MachineTokenCommandTest
 {
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->machine_tokens->method('getCollectedClass')->willReturn(MachineToken::class);

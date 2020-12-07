@@ -7,6 +7,7 @@ use Consolidation\AnnotatedCommand\CommandData;
 use Pantheon\Terminus\Config\TerminusConfig;
 use Pantheon\Terminus\Exceptions\TerminusException;
 use Pantheon\Terminus\Hooks\RoleValidator;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\InputInterface;
 
 /**
@@ -14,7 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
  * Testing class for Pantheon\Terminus\Hooks\RoleValidator
  * @package Pantheon\Terminus\UnitTests\Hooks
  */
-class RoleValidatorTest extends \PHPUnit_Framework_TestCase
+class RoleValidatorTest extends TestCase
 {
     const ORG_ROLES = 'admin, developer, team_member, or unprivileged';
     const PARAM_NAME = 'role';
@@ -43,7 +44,7 @@ class RoleValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @inheritDoc
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->config = new TerminusConfig();
 
@@ -140,6 +141,7 @@ class RoleValidatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests validateRole for a command that doesn't have a role list
+     * @throws TerminusException
      */
     public function testValidateRoleWrongCommand()
     {
@@ -169,6 +171,7 @@ class RoleValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the test to expect the input to have the argument or not
      *
+     * @param $command_name
      * @param bool $expect
      */
     protected function expectCommandName($command_name, $expect = true)
@@ -187,6 +190,7 @@ class RoleValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the test to expect the input to have the argument or not
      *
+     * @param $value
      * @param bool $expect
      */
     protected function expectGetArgument($value, $expect = true)
@@ -202,29 +206,23 @@ class RoleValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * Expects an invalid-command exception to be thrown
      *
-     * @param $command_name Name of the command whose parameter is being validated
+     * @param string $command_name Name of the command whose parameter is being validated
      */
-    protected function expectInvalidCommandNameException($command_name)
+    protected function expectInvalidCommandNameException(string $command_name)
     {
-        $expected_exception = new TerminusException(
-            'The available roles for {command_name} are unknown.',
-            compact('command_name')
-        );
-        $this->setExpectedException(get_class($expected_exception), $expected_exception->getMessage());
+        $this->expectException(TerminusException::class);
+        $this->expectExceptionMessage("The available roles for ${command_name} are unknown.");
     }
 
     /**
      * Expects an invalid-role exception to be thrown
      *
-     * @param $role
-     * @param $roles
+     * @param string $role
+     * @param string $roles
      */
-    protected function expectInvalidRoleException($role, $roles)
+    protected function expectInvalidRoleException(string $role, string $roles)
     {
-        $expected_exception = new TerminusException(
-            '{role} is not a valid role selection. Please enter {roles}.',
-            compact('role', 'roles')
-        );
-        $this->setExpectedException(get_class($expected_exception), $expected_exception->getMessage());
+        $this->expectException(TerminusException::class);
+        $this->expectExceptionMessage("${role} is not a valid role selection. Please enter ${roles}.");
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pantheon\Terminus\UnitTests\Commands\Site;
+namespace Pantheon\Terminus\UnitTests\Commands\Import;
 
 use Pantheon\Terminus\Commands\Import\CompleteCommand;
 use Pantheon\Terminus\UnitTests\Commands\CommandTestCase;
@@ -19,7 +19,7 @@ class CompleteCommandTest extends CommandTestCase
     /**
      * @inheritdoc
      */
-    protected function setup()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -29,7 +29,7 @@ class CompleteCommandTest extends CommandTestCase
         $this->command->setLogger($this->logger);
         $this->expectWorkflowProcessing();
     }
-    
+
     /**
      * Tests the import:complete command
      */

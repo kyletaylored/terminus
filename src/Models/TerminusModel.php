@@ -71,9 +71,10 @@ abstract class TerminusModel implements ConfigAwareInterface, RequestAwareInterf
     {
         $options = array_merge(['options' => ['method' => 'get',],], $args);
         $results = $this->request->request($this->getUrl(), $options);
+        $data = (!empty($results['data'])) ? $results['data'] : [];
         $this->attributes = (object)array_merge(
             (array)$this->attributes,
-            (array)$this->parseAttributes($results['data'])
+            (array)$this->parseAttributes($data)
         );
         return $this;
     }

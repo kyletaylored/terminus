@@ -44,7 +44,7 @@ class SSHKeys extends UserOwnedCollection
                 'method' => 'post',
             ]
         );
-        return (array)$response['data'];
+        return (!empty($response['data'])) ? (array)$response['data'] : [];
     }
 
     /**
@@ -58,7 +58,7 @@ class SSHKeys extends UserOwnedCollection
             'users/' . $this->getUser()->id . '/keys',
             ['method' => 'delete',]
         );
-        return (array)$response['data'];
+        return (!empty($response['data'])) ? (array)$response['data'] : [];
     }
 
     /**

@@ -41,7 +41,7 @@ class UserTest extends ModelTestCase
     /**
      * @inheritdoc
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -77,10 +77,10 @@ class UserTest extends ModelTestCase
 
         $config->expects($this->exactly(2))
             ->method('get')
-            ->withConsecutive(
+            ->withConsecutive([
                 $this->equalTo('dashboard_protocol'),
-                $this->equalTo('dashboard_host')
-            )
+                $this->equalTo('dashboard_host'),
+                ])
             ->willReturnOnConsecutiveCalls(
                 'https',
                 'dashboard.pantheon.io'
